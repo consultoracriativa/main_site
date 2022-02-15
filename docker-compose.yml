@@ -1,0 +1,31 @@
+version: '3.7'
+
+services:
+  db:
+    image: postgres:11.5-alpine
+    container_name: ${DB_CONTAINER_NAME}
+    volumes:
+      - postgres_data:/var/lib/potgresql/data/
+    ports:
+#      Local development only
+      - ${DATABASE_EXPOSE_PORT}:5432
+
+  backend:
+    build:
+      context: project/backend
+      dockerfile: Dockerfile
+    container_name: ${PROJECT_CONTAINER_NAME}
+    command: /${PROJECT_WORK_DIR}/scripts/start_project.sh
+    volumes:
+      - ./project/backend/project/:/${PROJECT_WORK_DIR}/${DJANGO_PROJECT_NAME}
+      - .env:/${PROJECT_WORK_DIR}/.env
+    ports:
+      - ${WSGI_PORT}:${WSGI_PORT}
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+
+
+

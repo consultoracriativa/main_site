@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    {% if does_not_exist %}
+     <span class="d-block p-2 bg-warning text-white">
+     {{ does_not_exist }}
+     </span>
+    {% else %}
+         <span class="d-block p-2 bg-primary text-white">
+            {% if menu_item %}
+             <a class="text-white" href='/{{ menu_item }}'>{{ category_desc }}</a>
+            {% else %}
+             {{ category_desc }}
+            {% endif %}
+         </span>
+    {% endif %}
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            {% if content %}
+                {%  if content.content_image %}
+                     <div class="col-md-6">
+                        <div class="image-wrapper float-left pr-3">
+                            <img class="img-fluid" src="{{ content.content_image.url }}" alt="{{ content.title |striptags }}" title="{{ concontenttent.title |striptags }}"/>
+                        </div>
+                    </div>
+                {%  endif %}
+                {% if content.title %}
+                    <h2 class="display-4">{{ content.title |safe |linebreaks }}</h2>
+                {% endif %}
+                {% if content.subject %}
+                    <p class="lead">{{ content.subject |safe  |linebreaks }}</p>
+                {% endif %}
+                <hr class="my-4">
+                {% if content.card_body %}
+                    <p class="lead">{{ content.card_body |safe  |linebreaks }}</p>
+                {% endif %}
+                <hr class="my-4">
+
+                {% if content.content %}
+                    <p>{{ content.content |safe  |linebreaks }}</p>
+                {% endif %}
+            {% endif %}
+            <a class="btn btn-primary btn-lg" role="button" href="javascript:history.back()"> Voltar <= </a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+{%  load static %}
+
+{% block local_styles %}
+
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-indicators li {
+          width: 10px;
+          height: 10px;
+          border-radius: 100%;
+        }
+
+        .container_size {
+            width: 55%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .main_content {
+            margin: 7%;
+        }
+{% endblock %}
+
+{% block content %}
+  <!--    Carousel -->
+    {% if carousel %}
+        <h1></h1>
+        <div class="container container_size">
+              <div id="carousel_content" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators" class="carousel-indicators">
+                {% for item in carousel %}
+                  <li data-target="#carousel_content" data-slide-to="{{ forloop.counter0 }}"></li>
+                {% endfor %}
+                </ol>
+
+                <div class="carousel-inner">
+                  {% for item in carousel %}
+                    <div class="carousel-item {% if forloop.counter0 == 0 %} active {% endif %}">
+                        <img class="d-block w-100" src="{{ item.content_image.url }}" alt={{ item.title }}>
+                         <div class="carousel-caption  d-md-block">
+                             {% if item.title %}
+                                <h5>{{ item.title |safe }}</h5>
+                             {% endif %}
+                            {% if item.subject %}
+                                <p>{{ item.subject |safe }}</p>
+                            {% endif %}
+                            {% if item.card_body %}
+                                <p>{{ item.card_body |safe }}</p>
+                            {% endif %}
+                          </div>
+                    </div>
+                  {% endfor %}
+                </div>
+
+                <a class="carousel-control-prev" href="#carousel_content" role="button" data-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carousel_content" role="button" data-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </div>
+          </div>
+    {% endif %} {#    Carousel #}
+
+    {% if content %}
+        <div id="main_content" class="main_content">
+            <!-- Page Features -->
+            <div class="row text-center">
+                {% for item in content %}
+                  <div class="col-lg-3 col-md-6 mb-4">
+                    <div class="card h-100">
+                        {% if item.teaser_image %}
+                            <img class="card-img-top" src="{{ item.teaser_image.url }}" alt="">
+                        {%  endif %}
+                      <div class="card-body">
+                            {% if item.title %}
+                                <h4 class="card-title">{{ item.title |safe }}</h4>
+                            {% endif %}
+                            {% if item.subject %}
+                                <p class="card-text">{{ item.subject |safe }}</p>
+                            {% endif %}
+                            {% if item.card_body %}
+                                <p class="card-text">{{ item.card_body |safe }}</p>
+                            {% endif %}
+                      </div>
+                      <div class="card-footer">
+                      {% if item.read_more %}
+                                <a href="
+                                    {% if item.alternate_target_url %}
+                                        {{ item.alternate_target_url }}
+                                    {% else %}
+                                        {{ item.category.category }}/content/{{ item.pk }}
+                                    {% endif %}
+                                   "
+                                    class="btn btn-primary">
+                                    {% if item.alternate_read_more_label %}
+                                      {{ item.alternate_read_more_label }}
+                                    {% else %}
+                                        Ver +
+                                    {%  endif %}
+                                </a>
+                          {%  endif %}
+                      </div>
+                    </div>
+                  </div>
+
+            {% endfor %}
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+    {% else %}
+        <div class="card">
+            No Content to display
+            Please create a superuser and add some content in <a href="/admin">admin</a>.
+        </div>
+    {% endif %}
+
+{% endblock %}

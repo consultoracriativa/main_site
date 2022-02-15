@@ -1,0 +1,14 @@
+# System pecific's and IDE's files
+# should be referred in a global  ~/.gitignore file.
+
+.env*
+*.pyc
+*.sqlite
+*.sqlite3
+secret_key.py
+scripts/code-linter.sh
+
+media/
+project/backend/project/static/
+
+__pycache__/

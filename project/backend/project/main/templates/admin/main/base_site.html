@@ -1,0 +1,7 @@
+{% extends "admin:admin/base_site.html" %}
+{% block branding %}
+    {% if request.session.last_site_url %}
+        <a href="{{ request.session.last_site_url }}">back to site</a>
+    {% endif %}
+    <h1 id="site-name">{% trans 'Django administration' %}</h1>
+{% endblock %}

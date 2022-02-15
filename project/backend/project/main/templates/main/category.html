@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block local_styles %}
+
+        /* Make the image fully responsive */
+        .carousel-inner img {
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-indicators li {
+          width: 10px;
+          height: 10px;
+          border-radius: 100%;
+        }
+
+        .container_size {
+            width: 55%;
+            margin-top: 5%;
+            margin-bottom: 5%;
+        }
+
+        .main_content {
+            margin: 7%;
+        }
+
+        .padding-0 {
+
+            padding-right:0;
+            padding-left:0;
+            padding-top:0;
+            padding-bottom:0;
+            padding:0;
+            margin: 0;
+        }
+
+
+{% endblock %}
+
+{% block content %}
+    {% if does_not_exist %}
+         <span class="d-block p-2 bg-warning text-white">
+            {{ does_not_exist }}
+         </span>
+        <div id="main_content" class="main_content">
+            <a class="btn btn-primary btn-lg" role="button" href="javascript:history.back()"> Voltar <= </a>
+        </div>
+    {% else %}
+        <span class="d-block p-2 bg-primary text-white">{{ category_desc }}</span>
+        {% if content %}
+            <div id="main_content" class="main_content">
+                <!-- Page Features -->
+                <div class="row text-center padding-0" style="margin:0; padding:0;">
+                    {% for item in content %}
+                      <div class="col-lg-3 col-md-6 mb-4 padding-0">
+                        <div class="card h-100">
+                            {% if item.teaser_image %}
+                                <img class="card-img-top" src="{{ item.teaser_image.url }}" alt="">
+                            {%  endif %}
+                          <div class="card-body">
+                                 {% if item.title %}
+                                    <h5>{{ item.title |title |safe  |linebreaks }}</h5>
+                                 {% endif %}
+                                {% if item.subject %}
+                                    <p>{{ item.subject |safe  |linebreaks }}</p>
+                                {% endif %}
+                                {% if item.card_body %}
+                                    <p>{{ item.card_body |safe  |linebreaks }}</p>
+                                {% endif %}
+                          </div>
+                          <div class="card-footer">
+                              {% if item.read_more %}
+                                    <a href="
+                                        {% if item.alternate_target_url %}
+                                            {{ item.alternate_target_url }}
+                                        {% else %}
+                                            content/{{ item.pk }}
+                                        {% endif %}
+                                       "
+                                        class="btn btn-primary">
+                                        {% if item.alternate_read_more_label %}
+                                          {{ item.alternate_read_more_label }}
+                                        {% else %}
+                                            Ver +
+                                        {%  endif %}
+                                    </a>
+                              {%  endif %}
+                          </div>
+                        </div>
+                      </div>
+                {% endfor %}
+
+                </div>
+                <!-- /.row -->
+
+            </div>
+        {% endif %}
+    {% endif %}
+
+{% endblock %}

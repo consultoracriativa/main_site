@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block local_styles %}
+    .cartaz {
+        text-align: center;
+        background-color: lightgrey;
+        width: 80%;
+        margin: auto;
+
+    }
+{% endblock %}
+
+{% block content %}
+    <div class="cartaz">
+
+        {%  if content.content_image %}
+            <img style="margin: 2%;" src="{{ content.content_image.url }}" />
+        {%  endif %}
+
+    </div>
+{% endblock %}
+
+{% block local_javascript %}
+    <script>
+        $('div#header').hide();
+        $('div#footer').hide();
+    </script>
+{% endblock %}

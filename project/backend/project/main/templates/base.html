@@ -1,0 +1,179 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        Project
+        {% if page_title %}
+            | {{page_title}}
+        {% endif %}
+    </title>
+
+    <link rel="stylesheet" href="{% static 'main/bootstrap/css/bootstrap.css' %}" />
+    <link rel="stylesheet" href="{% static 'main/css/contact_form.css' %}" />
+{#    <link rel="stylesheet" href="{% static 'main/multiverse/css/main.css' %}" />#}
+    <script src="{% static 'main/js/jquery.js' %}"></script>
+    <script src="{% static 'main/bootstrap/js/bootstrap.js' %}"></script>
+    <script src="{% static 'main/js/contact_form.js' %}"></script>
+
+    <link rel="shortcut icon" type="image/png" href="{% static 'favicon.ico' %}"/>
+
+    <style>
+
+        .header_footer {
+            margin: auto;
+            text-align: center;
+        }
+        body {
+            background-color: #010722;
+        }
+        .mandatory_field{
+            color: red;
+        }
+
+        {% block local_styles %}
+        {% endblock %}
+
+    </style>
+
+    {% block local_includes %}
+    {% endblock %}
+
+</head>
+<body>
+
+
+ {# Modal contact form #}
+
+{#    <div class="container-box rotated">#}
+{#    <button type="button" class="btn btn-info btn-lg turned-button" data-toggle="modal" data-target="#myModal">Contact Us</button>#}
+{#    </div>#}
+
+    <!-- Modal -->
+    <div class="container" >
+        <div id="contact_form_id" class="modal fade" role="dialog">
+          <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Contactos</h4>
+                <button type="button" class="close" data-dismiss="modal">×</button>
+            </div>
+            <div class="modal-body">
+                <p>
+                    Contactos descritos no rodapé da pagina.
+                </p>
+                <p>
+                    Alternativamente poderá enviar o seu contacto atraves do formulario abaixo. <br />
+                    Deverá obter uma resposta no máximo em um dia util.
+                </p>
+                <span class="mandatory_field">*</span><span> = Campo obrigatório </span>
+                <form role="form" method="post" id="reused_form" >
+                    {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="name">
+                        <span class="mandatory_field">*</span> Nome:</label>
+                    <input type="text" class="form-control"
+                    id="name" name="name"   required maxlength="50">
+
+                </div>
+                <div class="form-group">
+                    <label for="email">
+                        <span class="mandatory_field">*</span> Email:</label>
+                    <input type="email" class="form-control"
+                    id="email" name="email" required maxlength="50">
+                </div>
+                <div class="form-group">
+                    <label for="phone">
+                        Telefone:</label>
+                    <input class="form-control"
+                    id="email" name="phone"  maxlength="50">
+                </div>
+                <input type="hidden" name="hiddevvalue"  value="">
+                <div class="form-group">
+                    <label for="name">
+                        <span class="mandatory_field">*</span> Message:</label>
+                    <textarea required class="form-control" type="textarea" name="message"
+                    id="message" placeholder="A sua mensagem"
+                    maxlength="6000" rows="7"></textarea>
+                </div>
+
+
+                <button type="submit" class="btn btn-lg btn-success btn-block" id="btnContactUs">Enviar →</button>
+
+            </form>
+            <div id="success_message" style="width:100%; height:100%; display:none; ">
+                <h3>Sent your message successfully!</h3>
+            </div>
+            <div id="error_message"
+            style="width:100%; height:100%; display:none; ">
+                <h3>Error</h3>
+                Sorry there was an error sending your form.
+
+            </div>
+        </div>
+
+        </div>
+
+         </div>
+        </div>
+    </div>
+
+    {# Modal contact form #}
+    <div id="header" class="header_footer">
+        {% if header %}
+            <a href="/">
+                <img width=800 src="{{ header.content_image.url }}" alt="Header"/>
+            </a>
+        {% else %}
+            <div class="card">Site Header</div>
+        {% endif %}
+    </div>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="/">Home</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                {% for item in menu %}
+                    <li class="nav-item ">
+                        <a class="nav-link" href="/{{ item.category }}">{{ item.text_show }} <span class="sr-only">(current)</span></a>
+                    </li>
+                {% endfor %}
+                {# Contact form #}
+                <li>
+                    <a class="nav-link" href="" data-toggle="modal" data-target="#contact_form_id">
+                        Contactos
+                    </a>
+                </li>
+            </ul>
+            {% if user_is_logged %}
+                <a href="/admin/"> {{ user.username }} </a>
+            {% endif  %}
+        </div>
+      </nav>
+
+    {% block content %}
+    {% endblock %}
+
+    <div id="footer" class="header_footer">
+        {% if footer %}
+            <img src="{{ footer.content_image.url }}" alt="Footer" />
+        {% else %}
+            <div class="card">Site Footer</div>
+        {% endif %}
+    </div>
+
+    {% block local_javascript %}
+    {% endblock %}
+
+
+<button onclick="topFunction()" id="myBtn" title="Menu">^</button>
+</body>
+</html>

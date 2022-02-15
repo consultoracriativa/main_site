@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block local_styles %}
+{% endblock %}
+
+{% block local_includes %}
+    <link rel="stylesheet" href="{% static 'main/multiverse/css/main.css' %}" />
+    <noscript><link rel="stylesheet" href="{% static 'main/multiverse/css/noscript.css' %}" /></noscript>
+{% endblock %}
+
+{% block content %}
+     {% if does_not_exist %}
+         <span class="d-block p-2 bg-warning text-white">
+            {{ does_not_exist }}
+         </span>
+        <div id="main_content" class="main_content">
+            <a class="btn btn-primary btn-lg" role="button" href="javascript:history.back()"> Voltar <= </a>
+        </div>
+    {% else %}
+        <span class="d-block p-2 bg-primary text-white">{{ category_desc }}</span>
+        {% if content %}
+            <div id="wrapper">
+                <!-- Header -->
+                    <header id="header">
+                        <a href="#footer" class="icon fa-info-circle"> Powered by Multiverse Photogallery - Thanks </a>
+                    </header>
+
+                <!-- Main -->
+                    <div id="main">
+                        {% for item in content %}
+                            <article class="thumb">
+                                {% if item.content_image %}
+                                   <a href={{ item.content_image.url }} class="image">
+                                            <img  src="{{ item.content_image.url }}" alt="">
+                                        </a>
+                                {%  endif %}
+                                {% if item.title %}
+                                    <h2>{{ item.title }} <span class='photo_footer'>({{ item.pk }})</span></h2>
+                                {% endif %}
+                                {% if item.subject %}
+                                    <p>{{ item.subject }}</p>
+                                {% endif %}
+                            </article>
+                        {% endfor %}
+                    </div>
+            </div>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block local_javascript %}
+
+            <script src="{% static 'main/multiverse/js/jquery.poptrox.min.js' %}"></script>
+			<script src="{% static 'main/multiverse/js/browser.min.js' %}"></script>
+			<script src="{% static 'main/multiverse/js/breakpoints.min.js' %}"></script>
+			<script src="{% static 'main/multiverse/js/util.js' %}"></script>
+			<script src="{% static 'main/multiverse/js/main.js' %}"></script>
+
+{% endblock %}
