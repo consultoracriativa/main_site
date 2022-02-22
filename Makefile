@@ -1,7 +1,7 @@
 # Django and Docker commands
 
-PROJECT_NAME = project
-DJANGO_PROJECT_NAME = project
+PROJECT_NAME = main_site
+DJANGO_PROJECT_NAME = main_site
 PROJECT_SRV = ${PROJECT}_SRV
 
 .PHONY = help
