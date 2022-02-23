@@ -17,7 +17,11 @@ if [ "$DEVELOPMENT" = "True" ]
 then
   echo "Starting Django DEVELOPMENT WSGI."
   python /$PROJECT_WORK_DIR/$DJANGO_PROJECT_NAME/manage.py runserver 0.0.0.0:$WSGI_PORT
+  echo "WKRDIR RUI MARTINS: "
+  echo $wrkdir
 else
   echo "Starting GUnicorn  PROD WSGI."
+    echo "WKRDIR RUI MARTINS: "
+  echo $wrkdir
   gunicorn --chdir /$PROJECT_WORK_DIR/$DJANGO_PROJECT_NAME --bind 0.0.0.0:$WSGI_PORT  $PROJECT_NAME.wsgi:application
 fi
