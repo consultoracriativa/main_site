@@ -6,7 +6,7 @@ RUN apk update && \
     apk add --no-cache jpeg-dev zlib-dev && \
     apk add --no-cache --virtual .build-deps build-base linux-headers
 
-WORKDIR workdir
+WORKDIR wrkdi
 
 RUN pip install --upgrade pip
 
